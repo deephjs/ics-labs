@@ -1,0 +1,7 @@
+1.ps -A --sort comm --no-headers
+2.grep ^a /usr/share/dict/words |wc -w
+3.ls -s -l *.conf |sort -r| tail -n 5
+4.touch echo.sh
+  echo echo hello world! >> echo.sh
+  chmod a+x echo.sh
+  ./echo.sh

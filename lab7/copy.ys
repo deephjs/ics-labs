@@ -1,0 +1,48 @@
+#Huang Junsen 5130379024
+		.pos 0
+init:		irmovl Stack,%esp
+		irmovl Stack,%ebp
+		call Main
+		halt
+.align 4
+src:
+		.long 0x00a
+		.long 0x0b0
+		.long 0xc00
+dest:
+		.long 0x111
+		.long 0x222
+		.long 0x333
+Main:		pushl %ebp
+		rrmovl %ebp,%esp
+		irmovl $3,%eax
+                pushl %eax
+		irmovl dest,%eax
+		pushl %eax
+		irmovl src,%eax
+		pushl %eax
+		call copy_block
+		rrmovl %ebp,%esp
+		popl %ebp
+		ret
+
+copy_block:	pushl %ebp
+		rrmovl %esp,%ebp
+		mrmovl 8(%ebp),%ebx
+		mrmovl 12(%ebp),%ecx
+		mrmovl 16(%ebp),%edx
+		xorl %eax,%eax
+		andl %edx,%edx
+		je End
+Loop:	mrmovl (%ebx),%esi
+		rmmovl %esi,(%ecx)
+		xorl %esi,%eax
+		irmovl $4,%esi
+		addl %esi,%ebx
+		addl %esi,%ecx
+		irmovl $-1,%esi
+		addl %esi,%edx
+		jne Loop
+End:
+.pos 0x100
+Stack:

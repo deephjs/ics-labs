@@ -1,0 +1,265 @@
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len ints to dst.
+# Return the number of positive ints (>0) contained in src.
+#
+# Include your name and ID here.
+#
+# Describe how and why you modified the baseline code.
+#
+##################################################################
+# Do not modify this portion
+# Function prologue.
+ncopy:	pushl %ebp		# Save old frame pointer
+	rrmovl %esp,%ebp	# Set up new frame pointer
+	pushl %esi		# Save callee-save regs
+	pushl %ebx
+	pushl %edi
+	mrmovl 8(%ebp),%ebx	# src
+	mrmovl 16(%ebp),%edx	# len
+	mrmovl 12(%ebp),%ecx	# dst
+
+##################################################################
+# You can modify this portion
+	# Loop header
+	xorl %eax,%eax		# count = 0
+	iaddl $-16, %edx
+	jge Loop1
+	addl %edx, %edx
+	addl %edx, %edx
+	mrmovl JMPTABLE(%edx), %edi
+	pushl %edi
+	ret
+Loop1:
+	mrmovl (%ebx), %esi	# read val from src...
+	rmmovl %esi, (%ecx)	# ...and store it to dst 
+	andl %esi, %esi		# val <= 0?
+	mrmovl 4(%ebx), %esi	# read val from src...
+	jle Loop2		# if so, goto Loop2:
+	iaddl $1, %eax		# count++
+Loop2:
+	rmmovl %esi, 4(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 8(%ebx), %esi	# read val from src...
+	jle Loop3		# if so, goto Loop3:
+	iaddl $1, %eax		# count++
+Loop3:
+	rmmovl %esi, 8(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 12(%ebx), %esi	# read val from src...
+	jle Loop4		# if so, goto Loop4:
+	iaddl $1, %eax		# count++
+Loop4:	
+	rmmovl %esi, 12(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 16(%ebx), %esi	# read val from src...
+	jle Loop5		# if so, goto Loop5:
+	iaddl $1, %eax		# count++
+Loop5:	
+	rmmovl %esi, 16(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 20(%ebx), %esi	# read val from src...
+	jle Loop6		# if so, goto Loop6:
+	iaddl $1, %eax		# count++
+Loop6:
+	rmmovl %esi, 20(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 24(%ebx), %esi
+	jle Loop7		# if so, goto Loop7:
+	iaddl $1, %eax		# count++
+Loop7:
+	rmmovl %esi, 24(%ecx)
+	andl %esi, %esi
+	mrmovl 28(%ebx), %esi
+	jle Loop8
+	iaddl $1, %eax
+Loop8:
+	rmmovl %esi, 28(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 32(%ebx), %esi
+	jle Loop9		# if so, goto Loop9:
+	iaddl $1, %eax		# count++
+Loop9:
+	rmmovl %esi, 32(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 36(%ebx), %esi
+	jle Loop10		# if so, goto Loop10:
+	iaddl $1, %eax		# count++
+Loop10:
+	rmmovl %esi, 36(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 40(%ebx), %esi
+	jle Loop11		# if so, goto Loop11:
+	iaddl $1, %eax		# count++
+Loop11:
+	rmmovl %esi, 40(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 44(%ebx), %esi
+	jle Loop12		# if so, goto Loop12:
+	iaddl $1, %eax		# count++
+Loop12:
+	rmmovl %esi, 44(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 48(%ebx), %esi
+	jle Loop13		# if so, goto Loop13:
+	iaddl $1, %eax		# count++
+Loop13:
+	rmmovl %esi, 48(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 52(%ebx), %esi
+	jle Loop14		# if so, goto Loop14:
+	iaddl $1, %eax		# count++
+Loop14:
+	rmmovl %esi, 52(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 56(%ebx), %esi
+	jle Loop15		# if so, goto Loop15:
+	iaddl $1, %eax		# count++
+Loop15:
+	rmmovl %esi, 56(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	mrmovl 60(%ebx), %esi
+	jle Loop16		# if so, goto Loop16:
+	iaddl $1, %eax		# count++
+Loop16:
+	rmmovl %esi, 60(%ecx)	# ...and store it to dst
+	iaddl $64, %ebx		# src += 16
+	iaddl $64, %ecx		# dst += 16
+	andl %esi, %esi		# val <= 0?
+	jle CMP			# if so, goto CMP:
+	iaddl $1, %eax		# count++
+
+CMP:
+	iaddl $-16, %edx
+	jge Loop1
+	addl %edx, %edx
+    	addl %edx, %edx
+	mrmovl JMPTABLE(%edx), %edi
+	pushl %edi
+	ret
+
+	.long Done
+	.long EX15
+	.long EX14
+	.long EX13
+	.long EX12
+	.long EX11
+	.long EX10
+	.long EX9
+	.long EX8
+	.long EX7
+	.long EX6
+	.long EX5
+	.long EX4
+	.long EX3
+	.long EX2
+	.long EX1
+JMPTABLE:
+EX1:
+	mrmovl 56(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 56(%ecx)	# ...and store it to dst
+	jle EX2
+	iaddl $1, %eax		# count++
+EX2:
+	mrmovl 52(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 52(%ecx)	# ...and store it to dst
+	jle EX3			# if so, goto Done:
+	iaddl $1, %eax		# count++
+EX3:
+	mrmovl 48(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 48(%ecx)	# ...and store it to dst
+	jle EX4		# if so, goto EX4:
+	iaddl $1, %eax		# count++
+EX4:
+	mrmovl 44(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0
+	rmmovl %esi, 44(%ecx)	# ...and store it to dst
+	jle EX5			# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX5:
+	mrmovl 40(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 40(%ecx)	# ...and store it to dst
+	jle EX6		# if so, goto Done:
+	iaddl $1, %eax		# count++
+EX6:
+	mrmovl 36(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 36(%ecx)	# ...and store it to dst
+
+	jle EX7		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX7:
+	mrmovl 32(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 32(%ecx)	# ...and store it to dst
+	jle EX8			# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX8:
+	mrmovl 28(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 28(%ecx)	# ...and store it to dst
+	jle EX9		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX9:
+	mrmovl 24(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 24(%ecx)	# ...and store it to dst
+	jle EX10		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX10:
+	mrmovl 20(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 20(%ecx)	# ...and store it to dst
+	jle EX11		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX11:
+	mrmovl 16(%ebx), %esi	# read val from src...
+	andl %esi, %esi		# val <= 0?
+	rmmovl %esi, 16(%ecx)	# ...and store it to dst
+	jle EX12		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX12:
+	mrmovl 12(%ebx), %esi	# read val from src...
+	rmmovl %esi, 12(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	jle EX13		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX13:
+	mrmovl 8(%ebx), %esi	# read val from src...
+	rmmovl %esi, 8(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	jle EX14		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX14:
+	mrmovl 4(%ebx), %esi	# read val from src...
+	rmmovl %esi, 4(%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	jle EX15		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+EX15:
+	mrmovl (%ebx), %esi	# read val from src...
+	rmmovl %esi, (%ecx)	# ...and store it to dst
+	andl %esi, %esi		# val <= 0?
+	jle Done		# if so, goto EX5:
+	iaddl $1, %eax		# count++
+
+
+
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	popl %edi               # Restore callee-save registers
+	popl %ebx
+	popl %esi
+	rrmovl %ebp, %esp
+	popl %ebp
+	ret
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */

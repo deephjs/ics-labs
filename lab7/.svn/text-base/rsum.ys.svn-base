@@ -1,0 +1,47 @@
+#Huang Junsen  5130379024
+.pos 0
+init:		irmovl Stack,%esp
+			irmovl Stack,%ebp
+			call Main
+			halt
+.align 4
+ele1:
+			.long 0x00a
+			.long ele2
+ele2:		
+			.long 0x0b0
+			.long ele3
+ele3:
+			.long 0xc00
+			.long 0
+Main:		pushl %ebp
+			rrmovl %esp,%ebp
+			irmovl ele1,%ebx
+			pushl %ebx
+			irmovl $0,%eax
+			call rsum_list
+			rrmovl %ebp,%esp
+			popl %ebp
+			ret 
+			halt
+
+rsum_list:	pushl %ebp
+			rrmovl %esp,%ebp
+			mrmovl 8(%ebp),%edx
+			mrmovl (%edx),%ecx
+			addl %ecx,%eax
+			irmovl $0,%esi
+			mrmovl 4(%edx),%ecx
+			xorl %ecx,%esi
+			je End
+			irmovl $8,%ecx
+			addl %ecx,%ebx
+			pushl %ebx
+			call rsum_list
+End:		rrmovl %ebp,%esp
+			popl %ebp
+			ret
+.pos 0x100
+Stack:
+			
+
